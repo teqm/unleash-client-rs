@@ -1,0 +1,22 @@
+[package]
+name = "unleash-client"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+default = []
+
+[dependencies]
+chrono = { version = "0.4.23" }
+reqwest = { version = "0.11.16", features = ["json"] }
+tokio = { version = "1.27.0", features = ["time"] }
+tracing = "0.1.37"
+unleash-yggdrasil = "0.5.3"
+unleash-types = "0.9.0"
+
+[dev-dependencies]
+tokio = { version = "1.27.0", features = ["full"] }
+tracing-subscriber = "0.3.16"
+
+[[example]]
+name = "main"
