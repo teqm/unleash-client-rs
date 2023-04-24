@@ -7,9 +7,9 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::RwLock;
 use std::time::Duration;
 use tracing::{debug, warn};
-use unleash_types::client_features::{Query as FeaturesQuery};
+use unleash_types::client_features::Query as FeaturesQuery;
 use unleash_types::client_metrics::{ClientApplication, ClientMetrics, MetricBucket};
-use unleash_yggdrasil::{EngineState, ResolvedToggle, VariantDef, Context};
+use unleash_yggdrasil::{Context, EngineState, ResolvedToggle, VariantDef};
 
 pub struct Unleash {
     app_name: String,
