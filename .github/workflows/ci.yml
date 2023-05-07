@@ -7,21 +7,7 @@ on:
       - master
 
 jobs:
-  run-check:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Run check
-        run: cargo check --all-targets
-
   run-linter:
-    needs: [run-check]
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +23,6 @@ jobs:
         run: cargo clippy --all-targets --all-features
 
   run-fmt:
-    needs: [run-check]
     runs-on: ubuntu-latest
 
     steps:
@@ -53,7 +38,6 @@ jobs:
         run: cargo fmt --all -- --check
 
   run-tests:
-    needs: [run-check]
     strategy:
       fail-fast: false
       matrix:
