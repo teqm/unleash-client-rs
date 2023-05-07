@@ -21,6 +21,7 @@ pub struct Unleash {
     etag: RwLock<Option<EntityTag>>,
     engine_state: RwLock<EngineState>,
     enabled: AtomicBool,
+    disable_metrics: bool,
 }
 
 impl Unleash {
@@ -31,6 +32,7 @@ impl Unleash {
         instance_id: Option<String>,
         refresh_interval: Option<Duration>,
         features_query: Option<FeaturesQuery>,
+        disable_metrics: Option<bool>,
     ) -> Unleash {
         let unleash_token = UnleashToken::try_from(token).unwrap();
 
@@ -51,6 +53,7 @@ impl Unleash {
             etag: RwLock::new(None),
             engine_state: RwLock::new(EngineState::default()),
             enabled: AtomicBool::new(false),
+            disable_metrics: disable_metrics.unwrap_or(false),
         }
     }
 
@@ -96,12 +99,16 @@ impl Unleash {
     pub async fn start(&self) {
         self.enabled.store(true, Ordering::Relaxed);
 
-        self.register().await;
+        if !self.disable_metrics {
+            self.register().await;
+        }
 
         while self.enabled.load(Ordering::Relaxed) {
             let metrics_bucket = self.refresh().await;
 
-            self.send_metrics(metrics_bucket).await;
+            if !self.disable_metrics {
+                self.send_metrics(metrics_bucket).await;
+            }
 
             tokio::time::sleep(self.refresh_interval).await;
         }
@@ -189,6 +196,7 @@ pub struct UnleashBuilder {
     instance_id: Option<String>,
     refresh_interval: Option<Duration>,
     features_query: Option<FeaturesQuery>,
+    disable_metrics: Option<bool>,
 }
 
 impl UnleashBuilder {
@@ -207,6 +215,11 @@ impl UnleashBuilder {
         self
     }
 
+    pub fn disable_metrics(mut self, disable_metrics: bool) -> Self {
+        self.disable_metrics = Some(disable_metrics);
+        self
+    }
+
     pub fn build(self, url: String, app_name: String, token: String) -> Unleash {
         Unleash::new(
             url,
@@ -215,6 +228,7 @@ impl UnleashBuilder {
             self.instance_id,
             self.refresh_interval,
             self.features_query,
+            self.disable_metrics,
         )
     }
 }
