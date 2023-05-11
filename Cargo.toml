@@ -3,6 +3,10 @@ name = "unleash-client"
 version = "0.1.0"
 edition = "2021"
 rust-version = "1.60"
+license = "Apache-2.0"
+description = "Unleash client SDK for Rust"
+homepage = "https://github.com/teqm/unleash-client-rs"
+repository = "https://github.com/teqm/unleash-client-rs"
 
 [features]
 default = []
