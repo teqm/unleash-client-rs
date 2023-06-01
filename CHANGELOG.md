@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/teqm/unleash-client-rs/compare/v0.1.0...v0.1.1) (2023-06-01)
+
+### Documentation
+
+- add crates.io badge ([#5](https://github.com/teqm/unleash-client-rs/issues/5)) ([34201e3](https://github.com/teqm/unleash-client-rs/commit/34201e36298c6b7c47a47ce21c5de1f2d7b24739))
+
+### Miscellaneous Tasks
+
+- bump `unleash-yggdrasil` ([#6](https://github.com/teqm/unleash-client-rs/issues/6)) ([26b27b6](https://github.com/teqm/unleash-client-rs/commit/26b27b6a737ca676f4242f2091596e5826ea32b4))
+
 ## 0.1.0 (2023-05-11)
 
 ### Continuous Integration
@@ -25,6 +35,8 @@ All notable changes to this project will be documented in this file. See [Conven
 - remove cargo lock ([9886e88](https://github.com/teqm/unleash-client-rs/commit/9886e886ea8c288aaaf94113e6fc86db047987f4))
 - update `unleash-yggdrasil` ([c6941a5](https://github.com/teqm/unleash-client-rs/commit/c6941a5976921a0f7f77192dcd7c8b74fe3fb759))
 - update `unleash-yggdrasil` ([f3f21dc](https://github.com/teqm/unleash-client-rs/commit/f3f21dc54da251b9e6b44283c9d1aa697fc320ca))
+- add LICENSE ([#4](https://github.com/teqm/unleash-client-rs/issues/4)) ([d266ddf](https://github.com/teqm/unleash-client-rs/commit/d266ddf78b59194020c0826e5ebe7377e16ae04b))
+- add required manifest fields ([d220a11](https://github.com/teqm/unleash-client-rs/commit/d220a11ccf339b703170caeca54125a6119eed38))
 
 ### Styling
 
