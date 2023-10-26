@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/teqm/unleash-client-rs/compare/v0.1.1...v0.1.2) (2023-10-26)
+
+### Bug Fixes
+
+- fix context merging ([#9](https://github.com/teqm/unleash-client-rs/issues/9)) ([7e2e375](https://github.com/teqm/unleash-client-rs/commit/7e2e375b1625a1ed7abf5e3c772316d8d82ef609))
+
 ## [0.1.1](https://github.com/teqm/unleash-client-rs/compare/v0.1.0...v0.1.1) (2023-06-01)
 
 ### Documentation
