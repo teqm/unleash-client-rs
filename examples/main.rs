@@ -20,7 +20,7 @@ async fn main() {
         _ = async {
             tokio::time::sleep(std::time::Duration::from_secs(1)).await;
 
-            println!("{:#?}", unleash.resolve_all(&Default::default()).unwrap());
+            println!("{:#?}", unleash.resolve_all(&mut Default::default()).unwrap());
 
             unleash.stop();
         } => {}

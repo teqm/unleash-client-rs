@@ -57,43 +57,32 @@ impl Unleash {
         }
     }
 
-    pub fn is_enabled(&self, name: &str, context: &Context) -> bool {
-        let enhanced_context = Context {
-            app_name: Some(self.app_name.clone()),
-            environment: Some(self.environment.clone()),
-            ..context.clone()
-        };
+    fn enhance_context(&self, context: &mut Context) {
+        if context.app_name.is_none() {
+            context.app_name = Some(self.app_name.clone());
+        }
 
-        self.engine_state
-            .read()
-            .unwrap()
-            .is_enabled(name, &enhanced_context)
+        if context.environment.is_none() {
+            context.environment = Some(self.environment.clone());
+        }
     }
 
-    pub fn get_variant(&self, name: &str, context: &Context) -> VariantDef {
-        let enhanced_context = Context {
-            app_name: Some(self.app_name.clone()),
-            environment: Some(self.environment.clone()),
-            ..context.clone()
-        };
+    pub fn is_enabled(&self, name: &str, context: &mut Context) -> bool {
+        self.enhance_context(context);
 
-        self.engine_state
-            .read()
-            .unwrap()
-            .get_variant(name, &enhanced_context)
+        self.engine_state.read().unwrap().is_enabled(name, context)
     }
 
-    pub fn resolve_all(&self, context: &Context) -> Option<HashMap<String, ResolvedToggle>> {
-        let enhanced_context = Context {
-            app_name: Some(self.app_name.clone()),
-            environment: Some(self.environment.clone()),
-            ..context.clone()
-        };
+    pub fn get_variant(&self, name: &str, context: &mut Context) -> VariantDef {
+        self.enhance_context(context);
 
-        self.engine_state
-            .read()
-            .unwrap()
-            .resolve_all(&enhanced_context)
+        self.engine_state.read().unwrap().get_variant(name, context)
+    }
+
+    pub fn resolve_all(&self, context: &mut Context) -> Option<HashMap<String, ResolvedToggle>> {
+        self.enhance_context(context);
+
+        self.engine_state.read().unwrap().resolve_all(context)
     }
 
     pub async fn start(&self) {
