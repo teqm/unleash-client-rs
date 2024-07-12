@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/teqm/unleash-client-rs/compare/v0.1.2...v0.1.3) (2024-07-12)
+
+### Miscellaneous Tasks
+
+- update `unleash-yggdrasil` ([#11](https://github.com/teqm/unleash-client-rs/issues/11)) ([d7f34de](https://github.com/teqm/unleash-client-rs/commit/d7f34de94a87c6dc1c3575d1ae467c7658b43815))
+
 ## [0.1.2](https://github.com/teqm/unleash-client-rs/compare/v0.1.1...v0.1.2) (2023-10-26)
 
 ### Bug Fixes
