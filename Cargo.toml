@@ -2,7 +2,7 @@
 name = "unleash-client"
 version = "0.1.2"
 edition = "2021"
-rust-version = "1.63"
+rust-version = "1.67"
 license = "Apache-2.0"
 description = "Unleash client SDK for Rust"
 homepage = "https://github.com/teqm/unleash-client-rs"
@@ -16,8 +16,8 @@ chrono = { version = "0.4.23" }
 reqwest = { version = "0.11.16", features = ["json"] }
 tokio = { version = "1.27.0", features = ["time"] }
 tracing = "0.1.37"
-unleash-yggdrasil = "0.5.6"
-unleash-types = "0.10.0"
+unleash-yggdrasil = "0.12.0"
+unleash-types = "0.12.0"
 
 [dev-dependencies]
 tokio = { version = "1.27.0", features = ["full"] }
