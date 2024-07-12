@@ -9,7 +9,7 @@ use std::time::Duration;
 use tracing::{debug, warn};
 use unleash_types::client_features::Query as FeaturesQuery;
 use unleash_types::client_metrics::{ClientApplication, ClientMetrics, MetricBucket};
-use unleash_yggdrasil::{Context, EngineState, ResolvedToggle, VariantDef};
+use unleash_yggdrasil::{Context, EngineState, ExtendedVariantDef, ResolvedToggle};
 
 pub struct Unleash {
     app_name: String,
@@ -70,19 +70,28 @@ impl Unleash {
     pub fn is_enabled(&self, name: &str, context: &mut Context) -> bool {
         self.enhance_context(context);
 
-        self.engine_state.read().unwrap().is_enabled(name, context)
+        self.engine_state
+            .read()
+            .unwrap()
+            .is_enabled(name, context, &None)
     }
 
-    pub fn get_variant(&self, name: &str, context: &mut Context) -> VariantDef {
+    pub fn get_variant(&self, name: &str, context: &mut Context) -> ExtendedVariantDef {
         self.enhance_context(context);
 
-        self.engine_state.read().unwrap().get_variant(name, context)
+        self.engine_state
+            .read()
+            .unwrap()
+            .get_variant(name, context, &None)
     }
 
     pub fn resolve_all(&self, context: &mut Context) -> Option<HashMap<String, ResolvedToggle>> {
         self.enhance_context(context);
 
-        self.engine_state.read().unwrap().resolve_all(context)
+        self.engine_state
+            .read()
+            .unwrap()
+            .resolve_all(context, &None)
     }
 
     pub async fn start(&self) {
@@ -166,7 +175,14 @@ impl Unleash {
                     let mut e = self.etag.write().unwrap();
                     *e = etag;
 
-                    self.engine_state.write().unwrap().take_state(features)
+                    let metrics = self.engine_state.write().unwrap().get_metrics();
+                    let warnings = self.engine_state.write().unwrap().take_state(features);
+
+                    if let Some(warnings) = warnings {
+                        warn!("failed to hydrate features: {warnings:?}");
+                    }
+
+                    metrics
                 }
             },
             Err(e) => {
