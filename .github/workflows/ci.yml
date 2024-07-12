@@ -47,7 +47,7 @@ jobs:
           - stable
           - beta
           - nightly
-          - 1.63.0 # MSRV
+          - 1.65.0 # MSRV
         include:
           - toolchain: stable
             os: windows-latest
