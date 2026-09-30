@@ -9,6 +9,7 @@ pub struct UnleashClient {
     http_client: Client,
 }
 
+const UNLEASH_USER_AGENT: &str = concat!("unleash-client-rs/", env!("CARGO_PKG_VERSION"));
 const UNLEASH_APPNAME_HEADER: &str = "UNLEASH-APPNAME";
 const UNLEASH_INSTANCE_ID_HEADER: &str = "UNLEASH-INSTANCEID";
 const UNLEASH_CLIENT_SPEC_HEADER: &str = "Unleash-Client-Spec";
@@ -38,6 +39,10 @@ impl UnleashClient {
         header_map.insert(
             header::AUTHORIZATION,
             header::HeaderValue::from_bytes(token.as_bytes()).unwrap(),
+        );
+        header_map.insert(
+            header::USER_AGENT,
+            header::HeaderValue::from_static(UNLEASH_USER_AGENT),
         );
 
         if let Some(instance_id) = instance_id {
@@ -125,5 +130,27 @@ impl UnleashClient {
             .await?;
 
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::UnleashClient;
+    use reqwest::header::USER_AGENT;
+
+    #[test]
+    fn feature_request_uses_package_user_agent() {
+        let client = UnleashClient::new(
+            "http://localhost:4242".to_string(),
+            "test-app".to_string(),
+            None,
+            "test-token".to_string(),
+        );
+
+        let request = client.client_features_req(None, None).build().unwrap();
+        assert_eq!(
+            request.headers().get(USER_AGENT).unwrap().to_str().unwrap(),
+            format!("unleash-client-rs/{}", env!("CARGO_PKG_VERSION"))
+        );
     }
 }
