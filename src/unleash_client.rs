@@ -9,6 +9,7 @@ pub struct UnleashClient {
     http_client: Client,
 }
 
+const UNLEASH_USER_AGENT: &str = concat!("unleash-client-rs/", env!("CARGO_PKG_VERSION"));
 const UNLEASH_APPNAME_HEADER: &str = "UNLEASH-APPNAME";
 const UNLEASH_INSTANCE_ID_HEADER: &str = "UNLEASH-INSTANCEID";
 const UNLEASH_CLIENT_SPEC_HEADER: &str = "Unleash-Client-Spec";
@@ -38,6 +39,10 @@ impl UnleashClient {
         header_map.insert(
             header::AUTHORIZATION,
             header::HeaderValue::from_bytes(token.as_bytes()).unwrap(),
+        );
+        header_map.insert(
+            header::USER_AGENT,
+            header::HeaderValue::from_static(UNLEASH_USER_AGENT),
         );
 
         if let Some(instance_id) = instance_id {
