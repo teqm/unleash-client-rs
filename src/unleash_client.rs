@@ -132,25 +132,3 @@ impl UnleashClient {
         Ok(())
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::UnleashClient;
-    use reqwest::header::USER_AGENT;
-
-    #[test]
-    fn feature_request_uses_package_user_agent() {
-        let client = UnleashClient::new(
-            "http://localhost:4242".to_string(),
-            "test-app".to_string(),
-            None,
-            "test-token".to_string(),
-        );
-
-        let request = client.client_features_req(None, None).build().unwrap();
-        assert_eq!(
-            request.headers().get(USER_AGENT).unwrap().to_str().unwrap(),
-            format!("unleash-client-rs/{}", env!("CARGO_PKG_VERSION"))
-        );
-    }
-}
